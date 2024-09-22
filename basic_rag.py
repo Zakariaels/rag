@@ -1,4 +1,5 @@
-import os
+"""Module providing a basic RAG example."""
+
 import bs4
 from dotenv import load_dotenv
 from langchain import hub
@@ -34,8 +35,7 @@ splits = text_splitter.split_documents(docs)
 
 # Create embeddings and store them in a vector database
 # Chroma is used as the vector store, and OpenAIEmbeddings for creating embeddings
-vectorstore = Chroma.from_documents(documents=splits, 
-                                    embedding=OpenAIEmbeddings())
+vectorstore = Chroma.from_documents(documents=splits, embedding=OpenAIEmbeddings())
 
 # Create a retriever from the vector store
 # This will be used to fetch relevant documents based on the input query
@@ -52,8 +52,9 @@ llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
 
 # Define a function to format retrieved documents
 # This function joins the content of all retrieved documents into a single string
-def format_docs(docs):
-    return "\n\n".join(doc.page_content for doc in docs)
+def format_docs(docs_to_format):
+    """joins the content of all retrieved documents into a single string"""
+    return "\n\n".join(doc.page_content for doc in docs_to_format)
 
 # Construct the RAG chain
 # This chain retrieves relevant documents, formats them, adds the query,
@@ -67,10 +68,10 @@ rag_chain = (
 )
 
 # Run an example query through the RAG chain
-question = "What is Task Decomposition?"
-answer = rag_chain.invoke(question)
+QUESTION = "What is Task Decomposition?"
+answer = rag_chain.invoke(QUESTION)
 
-print(f"\nQuestion: {question}")
+print(f"\nQuestion: {QUESTION}")
 print(answer)
 
 # Note: In a real application, you might want to add error handling,
