@@ -1,5 +1,5 @@
-"""Module providing a modular RAG (Retrieval-Augmented Generation) example."""
 
+"""Module providing components for the RAG (Retrieval-Augmented Generation) system."""
 import bs4
 from dotenv import load_dotenv
 from langchain import hub
@@ -126,39 +126,3 @@ def create_rag_chain(retriever, model_name="gpt-3.5-turbo", temperature=0):
         | llm
         | StrOutputParser()
     )
-
-def main():
-    """Main function to orchestrate the RAG process."""
-    # Load environment variables
-    load_environment()
-    
-    # Example URL and question
-    url = "https://lilianweng.github.io/posts/2023-06-23-agent/"
-    question = "What is Task Decomposition?"
-    
-    # Indexing
-    print("Loading documents...")
-    docs = load_documents(url)
-    
-    print("Splitting documents...")
-    splits = split_documents(docs)
-    
-    print("Creating vector store...")
-    vectorstore = create_vectorstore(splits)
-    
-    print("Creating retriever...")
-    retriever = create_retriever(vectorstore)
-    
-    # Retrieval and Generation
-    print("Creating RAG chain...")
-    rag_chain = create_rag_chain(retriever)
-    
-    # Run the query
-    print(f"\nProcessing question: {question}")
-    answer = rag_chain.invoke(question)
-    
-    print(f"\nQuestion: {question}")
-    print(f"\nAnswer:\n{answer}")
-
-if __name__ == "__main__":
-    main()

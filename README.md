@@ -94,5 +94,5 @@ Remember to commit both `requirements.in` and `requirements.txt` after making ch
 1. Ensure your virtual environment is activated.
 2. Run the main script:
     ```
-    python basic_rag.py
+    python src/basic_rag/main.py
     ```
